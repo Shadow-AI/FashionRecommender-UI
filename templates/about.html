@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}About Gaia{% endblock %}
+
+{% block body %}
+
+        <!-- ****** New Arrivals Area Start ****** -->
+        <section class="new_arrivals_area section_padding_100_0 clearfix">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="section_heading text-center">
+                            <h2>About Us</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container mb-4">
+                <div class="row">
+                    <div class="col-12 women wow fadeInUpBig product-description text-center" data-wow-delay="0.2s">
+                        <h4 class="product-price">This website is a Fashion Recommendation Website, Gaia, developed as a BE project by us under the supervision of Prof. Juhi Janjua</h4>
+                        <h4 class="product-price">It essentially provides recommendations to a user for clothing options with various filters depending on the image the user submitted to the system</h4>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="container">
+                <div class="row karl-new-arrivals">
+
+                    <!-- Single gallery Item Start -->
+                    <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.4s">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="{% static 'img/20220214_235549.jpg' %}" alt="">
+                        </div>
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <h4 class="product-price">Deepanshu Bakhru</h4>
+
+
+                        </div>
+                    </div>
+
+                    <!-- Single gallery Item Start -->
+                    <div class="col-12 col-sm-6 col-md-4 single_gallery_item women wow fadeInUpBig" data-wow-delay="0.6s">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="{% static 'img/pp (1).jpg' %}" alt="">
+
+                        </div>
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <h4 class="product-price">Jatin Advani</h4>
+
+
+                        </div>
+                    </div>
+
+                    <!-- Single gallery Item Start -->
+                    <div class="col-12 col-sm-6 col-md-4 single_gallery_item access wow fadeInUpBig" data-wow-delay="1s">
+                        <!-- Product Image -->
+                        <div class="product-img">
+                            <img src="{% static 'img/pp.jpg' %}" alt="">
+
+                        </div>
+                        <!-- Product Description -->
+                        <div class="product-description">
+                            <h4 class="product-price">Nayan Mehta</h4>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+        <!-- ****** New Arrivals Area End ****** -->
+
+{% endblock %}

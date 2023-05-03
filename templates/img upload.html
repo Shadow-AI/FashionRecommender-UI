@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form enctype="multipart/form-data" action="{% url 'metrics' %}" method="post">
+    {% csrf_token %}
+    <input type="file" name="img">
+    <input type="text" name="category">
+    <button type="submit">Submit</button>
+</form>
+
+<div>
+    <p>
+        Recall: {{ recall }}<br>
+        Precision: {{ precision }}<br>
+        F1 score: {{ f1 }}<br>
+    </p>
+</div>
+
+
+</body>
+</html>

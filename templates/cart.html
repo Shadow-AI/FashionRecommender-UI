@@ -1,0 +1,107 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Gaia Wishlist{% endblock %}
+
+{% block body %}
+
+
+    <!-- ****** Cart Area Start ****** -->
+    <div class="cart_area section_padding_100 clearfix">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="cart-table clearfix">
+                        {% if wishlist %}
+                        <table class="table table-responsive">
+                            <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Buy Link</th>
+                                <th>Remove Item</th>
+
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for i in wishlist %}
+                                <tr>
+                                    <td class="cart_product_img d-flex align-items-center">
+                                        {% if i.item.image_link_front %}
+                                            <a href="http://{{ i.item.image_buy_link }}" target="_blank"><img
+                                                    src="{{ i.item.image_link_front }}"></a>
+                                        {% elif i.item.image_link_left %}
+                                            <a href="http://{{ i.item.image_buy_link }}" target="_blank"><img
+                                                    src="{{ i.item.image_link_left }}"></a>
+                                        {% elif i.item.image_link_right %}
+                                            <a href="http://{{ i.item.image_buy_link }}" target="_blank"><img
+                                                    src="{{ i.item.image_link_right }}"></a>
+                                        {% else %}
+                                            <a href="http://{{ i.item.image_buy_link }}" target="_blank"><img
+                                                    src="{{ i.item.image_link_back }}"></a>
+                                        {% endif %}
+                                        <h6>{{ i.item.name }}</h6>
+                                    </td>
+
+
+                                    <td class="total_price"><span><a href="http://{{ i.item.image_buy_link }}"
+                                                                     style="color: #ff5f7b;font-weight: 600;"
+                                                                     target="_blank">Visit Website</a></span></td>
+                                    <td class="price mx-auto">
+                                        <div class="d-flex justify-content-center">
+                                            <form method="post" action="{% url 'wish' %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="pk" value="{{ i.pk }}">
+                                                <button style="background: none;border: none;cursor: pointer; font-size: 2rem;"
+                                                        type="submit"><i class="fa fa-lg fa-times"
+                                                                         style="color: darkred"></i></button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        {% else %}
+                        You have no items added to wishlist
+                        {% endif %}
+                    </div>
+
+                    <div class="cart-footer d-flex mt-30">
+                        <div class="back-to-shop w-50">
+                            <a href="{% url 'display-rec' %}">Get more Recommendations</a>
+                        </div>
+                        <div class="update-checkout w-50 text-right">
+                            <form action="{% url 'wish' %}" method="post" id="formdeletewish">
+                                {% csrf_token %}
+                                <button type="submit" style="
+                                background-color: #f4f2f8;
+                                color: #7a7a7a;
+                                border-radius: 0;
+                                display: inline-block;
+                                cursor: pointer;
+                                height: 55px;
+                                line-height: 51px;
+                                min-width: 120px;
+                                padding: 0 30px;
+                                text-align: center;
+                                font-size: 14px;
+                                font-weight: 700;
+                                border: 2px solid #f4f2f8;
+                                text-transform: uppercase;">clear Wishlist
+                                </button>
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+    <!-- ****** Cart Area End ****** -->
+{% endblock %}
+
+        
+
+

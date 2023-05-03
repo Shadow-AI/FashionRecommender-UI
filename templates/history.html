@@ -1,0 +1,231 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ request.user.first_name }}'s History{% endblock %}
+
+
+
+{% block body %}
+
+    <div class="container cart_area section_padding_100 clearfix">
+        <div class="row">
+
+            <div class="col-12 cart-table clearfix">
+                {% if not recommend %}
+                    <h5 class="d-flex justify-content-center align-items-center">You have not used the recommender yet!</h5>
+
+                        <div class="back-to-shop w-100 d-flex justify-content-center align-items-center">
+                            <a href="{% url 'display-rec' %}">Get more Recommendations</a>
+
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <div class="container">
+    {% if recommend %}
+
+        <section class="shop_grid_area section_padding_100">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-12 col-md-4 col-lg-3">
+
+                        <div class="shop_sidebar_area">
+
+                            <div class="widget catagory mb-50">
+                                <!--  Side Nav  -->
+                                <div class="nav-side-menu">
+                                    <h5 class="mb-0">Filters</h5>
+                                    <div class="menu-list d-flex flex-column"> <h6 class="pt-3 pb-2">Gender</h6>
+                                        {% for i in gender %}
+
+                                            <label>
+                                                <input type="checkbox" checked id="filter-{{ i }}" value="on">
+                                                {{ i }}
+                                            </label>
+                                        {% endfor %}
+                                        <h6 class="pt-3 pb-2">Season</h6>
+                                        {% for i in season %}
+
+                                            <label>
+                                                <input type="checkbox" checked id="filter-{{ i }}">
+                                                {{ i }}
+                                            </label>
+                                        {% endfor %}
+                                        <h6 class="pt-3 pb-2">Category</h6>
+                                        {% for i in main_category %}
+
+                                            <label>
+                                                <input type="checkbox" checked id="filter-{{ i }}">
+                                                {{ i }}
+                                            </label>
+                                        {% endfor %}
+                                    <h6 class="pt-3 pb-2">Article</h6>
+                                        {% for i in article_category %}
+
+                                            <label>
+                                                <input type="checkbox" checked id="filter-{{ i }}">
+                                                {{ i }}
+                                            </label>
+                                        {% endfor %}
+                                        <h6 class="pt-3 pb-2">Usage</h6>
+                                        {% for i in usage %}
+
+                                            <label>
+                                                <input type="checkbox" checked id="filter-{{ i }}">
+                                                {{ i }}
+                                            </label>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                            <div class="widget color mb-70">
+                                <h6 class="widget-title mb-30">Filter by Color</h6>
+                                <div class="widget-desc d-flex flex-column">
+                                    {% for i in colour %}
+                                        <label>
+                                            <input type="checkbox" checked id="filter-{{ i }}">
+                                            {{ i }}
+                                        </label>
+                                    {% endfor %}
+                                </div>
+                            </div>
+
+
+
+
+                        </div>
+                    </div>
+
+                    <div class="col-12 col-md-8 col-lg-9">
+
+                        <div class="shop_grid_product_area">
+                            <div class="row">
+
+                                <!-- Single gallery Item -->
+                                {% for k,v in recommend.items %}
+                                    <div class="col-12 col-sm-6 col-lg-4 single_gallery_item wow fadeInUpBig
+                                    filter-{{ k.image.usage }} filter-{{ k.image.season }} filter-{{ k.image.colour }} filter-{{ k.image.gender }} filter-{{ k.image.main_category }} filter-{{ k.image.article_category }}"
+                                         data-wow-delay="0.2s">
+                                        <!-- Product Image -->
+                                        <div class="product-img">
+                                        <div id="product_details_slider-{{ k.image.name | first }}" class="carousel slide" data-ride="carousel">
+                                        <ol class="carousel-indicators">
+                                            {% for i in v %}
+                                    <li class="{% if forloop.counter0 == 0 %}active{% endif %}" data-target="#product_details_slider-{{ k.image.name | first }}" data-slide-to="{{ forloop.counter0 }}">
+                                    </li>
+                                                {% endfor %}
+                                </ol>
+                                            <div class="carousel-inner">
+
+                                                {% for image in v %}
+                                                <div class="carousel-item {% if forloop.counter0 == 0 %}active{% endif %}">
+                                                    <a class="gallery_img"
+                                                       href="{{image}}">
+                                                        <img class="d-block w-100"
+                                                             src="{{image}}">
+                                                    </a>
+                                                </div>
+                                                {% endfor %}
+
+                                            </div>
+                                        </div>
+                                        </div>
+                                        <!-- Product Description -->
+                                        <div class="product-description">
+                                            <h4 class="product-price">{{ k.image.main_category }}</h4>
+                                            <p>{{ k.image.name }}</p>
+                                            <p>{{ k.image.article_category }}</p>
+                                            <p>{{ k.image.colour }}</p>
+                                            <p>{{ k.image.gender }}</p>
+                                            <p>{{ k.image.season }} wear</p>
+                                            <p>{{ k.image.usage }}</p>
+                                            <!-- Add to Cart -->
+                                            <form method="post" action="{% url 'wish' %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" value="{{ k.image.id }}" name="pk">
+                                                <input type="hidden" value="True" name="is_add">
+                                            <button type="submit" style="background: none;border: none;cursor: pointer;" class="add-to-cart-btn">ADD TO WISHLIST</button>
+                                                </form>
+                                            <form method="post" action="{% url 'history' %}">
+                                                {% csrf_token %}
+                                                <input type="hidden" value="{{ k.id }}" name="pk">
+                                            <button type="submit" style="background: none;border: none;cursor: pointer; color: red;" class="add-to-cart-btn">REMOVE FROM HISTORY</button>
+                                                </form>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </section>
+    {% endif %}
+
+    <script src="{% static 'js/jquery/jquery-2.2.4.min.js' %}"></script>
+    <script type="text/javascript">
+    //this is the filter script
+    function filter(){
+        var uncheck = $("input[type='checkbox']:not(:checked)");
+        var check = $("input[type='checkbox']:checked");
+
+        for(let i = 0; i < check.length; i++){
+            $("."+check[i].id).css({
+                "display": "block",
+            });
+        }
+
+        for(let i = 0; i < uncheck.length; i++){
+            $("."+uncheck[i].id).css({
+                "display": "none",
+            });
+        }
+    }
+    $( "input[type=checkbox]" ).on( "click", filter );
+    </script>
+    <script>
+    function readURL(input) {
+    if (input.files && input.files[0]) {
+        console.log(input.files)
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#imgdisplay').attr('src', e.target.result);
+            $("#imgdisplaytext").text(input.files[0].name);
+            $("#imgdisplaysize").text(Math.round(parseInt(input.files[0].size)/1024) + " kB");
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+$("#image").change(function(){
+    readURL(this);
+});
+
+$("document").ready(()=>{
+    if($("#imgdisplay").attr('src')===""){
+        $("#imgdisplay").css({
+            visibility: hidden,
+        });
+    }
+    else{
+        $("#imgdisplay").css({
+            visibility: visible,
+        });
+    }
+});
+    </script>
+
+
+{% endblock %}
+
+   
